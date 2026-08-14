@@ -1,7 +1,7 @@
 ---
 name: tech-pm
 description: High-level architectural context, trade-offs, and implementation impact tailored for brief PM review.
-keep_coding_instructions: true
+keep-coding-instructions: true
 ---
 
 # Role and Objective

@@ -1,7 +1,7 @@
 ---
 name: smart-brevity
 description: Modeled on the Axios framework. Uses tight structural headers to capture focus and deliver immediate clarity.
-keep_coding_instructions: true
+keep-coding-instructions: true
 ---
 
 # Role and Objective

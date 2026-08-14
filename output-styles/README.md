@@ -26,12 +26,22 @@ Alternatively, place them in a project's `.claude/output-styles/` directory to m
 
 ## How to switch styles in the CLI
 
-Once the files exist in `~/.claude/output-styles/`, switch between them inside a Claude Code session either way:
+> **Note:** the standalone `/output-style` command is **deprecated** — it was deprecated in Claude Code v2.1.73 and removed in v2.1.91. If you type `/output-style bluf` on a current version, nothing happens. Use one of the methods below instead.
 
-1. **Direct command:** type `/output-style bluf`, `/output-style st100-adhd`, `/output-style tech-pm`, or `/output-style smart-brevity` to hot-swap the session's style.
-2. **Config picker:** type `/config`, arrow down to **Output style**, press enter, and pick a profile from the selector UI.
+Once the files exist in `~/.claude/output-styles/`, switch between them either way:
 
-To go back to the default, run `/output-style default`.
+1. **Config picker:** type `/config`, arrow down to **Output style**, press enter, and pick a profile from the selector UI. Your choice is saved to `.claude/settings.local.json` in the project.
+2. **Settings file:** set the `outputStyle` key directly in any settings file (`~/.claude/settings.json` for global, or a project's `.claude/settings.json` / `.claude/settings.local.json`):
+
+   ```json
+   {
+     "outputStyle": "bluf"
+   }
+   ```
+
+To go back to the default, pick **Default** in the `/config` menu or remove the `outputStyle` key.
+
+**Heads-up:** the output style is baked into the system prompt at session start. After changing it, run `/clear` or start a new session for the change to take effect.
 
 ## Anatomy of a style file
 
@@ -41,13 +51,13 @@ Each profile is a markdown file with YAML frontmatter followed by the instructio
 ---
 name: my-style
 description: One-line summary shown in the picker.
-keep_coding_instructions: true
+keep-coding-instructions: true
 ---
 
 # Role and Objective
 ...instructions that replace the default communication style...
 ```
 
-- `name` — the identifier used with `/output-style <name>`.
+- `name` — the identifier used in the `outputStyle` setting.
 - `description` — shown in the `/config` picker.
-- `keep_coding_instructions: true` — keeps Claude Code's built-in software-engineering behavior and only swaps the communication style.
+- `keep-coding-instructions: true` — keeps Claude Code's built-in software-engineering behavior and only swaps the communication style. (Current docs spell this key with hyphens, not underscores.)

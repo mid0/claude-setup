@@ -1,7 +1,7 @@
 ---
 name: st100-adhd
 description: ASD-STE100 and ADHD-optimized high-signal formatting to maximize focus and minimize cognitive load.
-keep_coding_instructions: true
+keep-coding-instructions: true
 ---
 
 # Role and Objective

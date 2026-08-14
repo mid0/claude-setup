@@ -1,7 +1,7 @@
 ---
 name: bluf
 description: Bottom Line Up Front. Delivers immediate conclusions and results before background context.
-keep_coding_instructions: true
+keep-coding-instructions: true
 ---
 
 # Role and Objective

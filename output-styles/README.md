@@ -1,20 +1,20 @@
 # Claude Code Custom Output Styles
 
-Five custom output style profiles for Claude Code. Output styles change *how* Claude communicates (formatting, structure, verbosity) while keeping its coding abilities intact.
+Five custom output style profiles for Claude Code. They add communication instructions to the system prompt. Each profile sets `keep-coding-instructions: true`, so Claude Code retains its built-in software-engineering instructions.
 
 ## The profiles
 
 | File | Style | Best for |
 |---|---|---|
 | [`bluf.md`](bluf.md) | **Bottom Line Up Front** | Getting the answer/command/fix in the very first sentence, context after |
-| [`st100-adhd.md`](st100-adhd.md) | **Simplified Technical English + ADHD focus** | High-signal, low-cognitive-load output: short blocks, active voice, one next step |
+| [`focused-technical.md`](focused-technical.md) | **Focused Technical** | High-signal, low-cognitive-load output: short blocks, active voice, one next step |
 | [`plain.md`](plain.md) | **Plain English** | Short common words, no jargon or metaphor. Written for non-native readers and for tired ones |
 | [`tech-pm.md`](tech-pm.md) | **Technical Product Manager** | Architectural summaries, trade-off tables, scope/debt/timeline impact |
-| [`smart-brevity.md`](smart-brevity.md) | **Smart Brevity** | Axios-style: punchy lead, "Why it matters", opt-in "Go deeper" details |
+| [`smart-brevity.md`](smart-brevity.md) | **Smart Brevity-inspired** | Book-inspired structure: concise lead, "Why it matters", opt-in "Go deeper" details |
 
 ## What the difference looks like
 
-Same prompt, five answers. The prompt:
+Same prompt, five hand-written examples. These illustrate each profile's intended structure; they are not captured model outputs or benchmark results. The prompt:
 
 > The `/users` endpoint got slow after yesterday's deploy. What should I check?
 
@@ -36,7 +36,7 @@ Same prompt, five answers. The prompt:
 >
 > An N+1 is the most common post-deploy cause on a list endpoint. If the diff is clean, check whether a migration dropped an index, then whether the container's memory limit changed.
 
-**`st100-adhd`**
+**`focused-technical`**
 
 > **Cause:** most likely an N+1 query added in yesterday's deploy.
 >
@@ -70,7 +70,7 @@ Same prompt, five answers. The prompt:
 
 ## Beyond output styles
 
-Output styles change how Claude *talks*. They do not change how it *writes code* — `keep-coding-instructions: true` leaves that alone on purpose.
+Output styles shape the main conversation. For project conventions such as comment style and density, Anthropic recommends `CLAUDE.md`.
 
 If your complaint is verbose *code* rather than verbose chat — comment bloat especially — see [`../claude-md/`](../claude-md/). It is one line.
 
@@ -80,16 +80,14 @@ Copy the markdown files in this folder into your global Claude Code config direc
 
 ```bash
 mkdir -p ~/.claude/output-styles
-cp *.md ~/.claude/output-styles/
+cp {bluf,focused-technical,plain,tech-pm,smart-brevity}.md ~/.claude/output-styles/
 ```
-
-(Don't copy this README — only the five profile files.)
 
 Alternatively, place them in a project's `.claude/output-styles/` directory to make them available only in that project.
 
 ## How to switch styles in the CLI
 
-> **Note:** the standalone `/output-style` command is **deprecated** — it was deprecated in Claude Code v2.1.73 and removed in v2.1.91. If you type `/output-style bluf` on a current version, nothing happens. Use one of the methods below instead.
+> **Note:** the standalone `/output-style` command was deprecated in Claude Code v2.1.73. Use one of the methods below instead.
 
 Once the files exist in `~/.claude/output-styles/`, switch between them either way:
 
@@ -123,4 +121,10 @@ keep-coding-instructions: true
 
 - `name` — the identifier used in the `outputStyle` setting.
 - `description` — shown in the `/config` picker.
-- `keep-coding-instructions: true` — keeps Claude Code's built-in software-engineering behavior and only swaps the communication style. (Current docs spell this key with hyphens, not underscores.)
+- `keep-coding-instructions: true` — retains Claude Code's built-in software-engineering instructions while adding the profile's communication rules. (Current docs spell this key with hyphens, not underscores.)
+
+## Attribution
+
+The `smart-brevity` profile is inspired by *Smart Brevity: The Power of Saying More with Less* by Jim VandeHei, Mike Allen, and Roy Schwartz. It is an independent adaptation for Claude Code and is not affiliated with or endorsed by Axios or the book's authors.
+
+The `focused-technical` profile borrows general controlled-language ideas such as active voice, short sentences, and one topic per paragraph. It is not an implementation of, or certification against, the ASD-STE100 standard.

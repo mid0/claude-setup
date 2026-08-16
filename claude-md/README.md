@@ -1,6 +1,6 @@
 # CLAUDE.md rules
 
-Output styles change how Claude *talks*. They leave code generation alone by design — that is what `keep-coding-instructions: true` means. Comment bloat is a `CLAUDE.md` problem.
+Output styles shape the main conversation. Project conventions such as comment style and density belong in `CLAUDE.md`; `keep-coding-instructions: true` retains Claude Code's built-in software-engineering instructions.
 
 `CLAUDE.md` loads into every prompt in the project, so every line costs you context forever. Keep it to rules that pay rent.
 
@@ -26,6 +26,6 @@ Fifty years of practice have not dated it, and it costs about 20 tokens.
 
 ## The failure it prevents
 
-Claude Code imitates the style it reads. A few heavily commented functions land in a file, later edits copy them, and subagents copy the subagents. One developer on Hacker News reported reaching roughly a 3:1 comment-to-code ratio after about 30 commits.
+Claude Code can follow the style it sees in a file. When heavily commented functions become the local example, later edits can add even more commentary.
 
-*Match the file's existing density* is the clause that stops the ratchet.
+*Match the file's existing density* tells Claude to preserve the project's current convention instead of introducing a new one.

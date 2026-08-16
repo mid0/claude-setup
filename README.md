@@ -11,3 +11,7 @@ I'm using this repo to share the global configuration I use with [Claude Code](h
 ## More coming
 
 I plan to add more of my global `~/.claude` setup here over time so others can pick and choose what's useful.
+
+## License
+
+[MIT](LICENSE) — copy, modify, and use any of this freely.

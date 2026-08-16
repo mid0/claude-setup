@@ -9,7 +9,7 @@ This repo holds the profiles I use, plus the `CLAUDE.md` rules that handle the p
 ## What's here
 
 - **[`output-styles/`](output-styles/)** — five profiles that change how Claude talks: Bottom Line Up Front, Simplified Technical English + ADHD focus, Plain English, Technical PM, and Smart Brevity. Includes side-by-side examples of the same answer in each style, and install instructions.
-- **[`claude-md/`](claude-md/)** — rules for how Claude *writes code*. Start with [`terse-code.md`](claude-md/terse-code.md) if your generated code is drowning in comments.
+- **[`claude-md/`](claude-md/)** — rules for how Claude *writes code*, kept to one line each. Currently: the [comment rule](claude-md/), for when generated code is drowning in comments.
 
 ## Quick start
 

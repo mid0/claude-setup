@@ -72,7 +72,7 @@ Same prompt, five answers. The prompt:
 
 Output styles change how Claude *talks*. They do not change how it *writes code* — `keep-coding-instructions: true` leaves that alone on purpose.
 
-If your complaint is verbose code rather than verbose chat (comment bloat, defensive `try`/`catch`, abstractions for cases that do not exist), see [`../claude-md/terse-code.md`](../claude-md/terse-code.md).
+If your complaint is verbose *code* rather than verbose chat — comment bloat especially — see [`../claude-md/`](../claude-md/). It is one line.
 
 ## Installation
 

@@ -1,6 +1,6 @@
 # Claude Code Custom Output Styles
 
-Four custom output style profiles for Claude Code. Output styles change *how* Claude communicates (formatting, structure, verbosity) while keeping its coding abilities intact.
+Five custom output style profiles for Claude Code. Output styles change *how* Claude communicates (formatting, structure, verbosity) while keeping its coding abilities intact.
 
 ## The profiles
 
@@ -8,8 +8,71 @@ Four custom output style profiles for Claude Code. Output styles change *how* Cl
 |---|---|---|
 | [`bluf.md`](bluf.md) | **Bottom Line Up Front** | Getting the answer/command/fix in the very first sentence, context after |
 | [`st100-adhd.md`](st100-adhd.md) | **Simplified Technical English + ADHD focus** | High-signal, low-cognitive-load output: short blocks, active voice, one next step |
+| [`plain.md`](plain.md) | **Plain English** | Short common words, no jargon or metaphor. Written for non-native readers and for tired ones |
 | [`tech-pm.md`](tech-pm.md) | **Technical Product Manager** | Architectural summaries, trade-off tables, scope/debt/timeline impact |
 | [`smart-brevity.md`](smart-brevity.md) | **Smart Brevity** | Axios-style: punchy lead, "Why it matters", opt-in "Go deeper" details |
+
+## What the difference looks like
+
+Same prompt, five answers. The prompt:
+
+> The `/users` endpoint got slow after yesterday's deploy. What should I check?
+
+**Default**
+
+> Great question — endpoint slowdowns after a deploy are a common issue, and there are several angles worth considering here. Let me walk through the most likely causes.
+>
+> First, it's worth understanding what changed. A deploy can affect performance through code changes, dependency updates, configuration drift, or infrastructure changes. Each of these has a different diagnostic path.
+>
+> One of the most frequent culprits in endpoints like `/users` is the N+1 query problem, where an ORM issues one query per record rather than a single joined query. [...three more paragraphs...]
+>
+> **The bottom line:** start by diffing the deploy, then check your query logs.
+
+**`bluf`**
+
+> Diff the deploy and check for a new N+1 query: `git diff HEAD~1 -- '*users*'`, then look at slow query logs for repeated identical `SELECT`s.
+>
+> ---
+>
+> An N+1 is the most common post-deploy cause on a list endpoint. If the diff is clean, check whether a migration dropped an index, then whether the container's memory limit changed.
+
+**`st100-adhd`**
+
+> **Cause:** most likely an N+1 query added in yesterday's deploy.
+>
+> Do these in order:
+>
+> 1. Run `git diff HEAD~1 -- '*users*'`.
+> 2. Open the slow query log. Look for the same `SELECT` repeated many times.
+> 3. Check whether a migration dropped an index.
+>
+> ---
+>
+> **Next step:** run the `git diff` command above.
+
+**`plain`**
+
+> Check for an N+1 query first. That is when the code runs one database query per user instead of one query for all of them.
+>
+> Run `git diff HEAD~1 -- '*users*'` to see what changed. Then open the slow query log. If you see the same `SELECT` many times in a row, that is the problem.
+>
+> If the diff looks fine, check if a migration removed an index.
+
+**`smart-brevity`**
+
+> **Check the deploy diff for an N+1 query.**
+>
+> **Why it matters:** a single missing `.include()` turns one query into hundreds, and it only shows up under real row counts.
+>
+> **Go deeper:** `git diff HEAD~1 -- '*users*'`, then grep the slow query log for repeated `SELECT`s. Index drops from migrations are the second suspect.
+
+`tech-pm` is not shown here — it reframes answers around scope, trade-offs, and debt, so it reads best on architecture questions rather than on debugging.
+
+## Beyond output styles
+
+Output styles change how Claude *talks*. They do not change how it *writes code* — `keep-coding-instructions: true` leaves that alone on purpose.
+
+If your complaint is verbose code rather than verbose chat (comment bloat, defensive `try`/`catch`, abstractions for cases that do not exist), see [`../claude-md/terse-code.md`](../claude-md/terse-code.md).
 
 ## Installation
 
@@ -20,7 +83,7 @@ mkdir -p ~/.claude/output-styles
 cp *.md ~/.claude/output-styles/
 ```
 
-(Don't copy this README — only the four profile files.)
+(Don't copy this README — only the five profile files.)
 
 Alternatively, place them in a project's `.claude/output-styles/` directory to make them available only in that project.
 
